@@ -10,6 +10,9 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@langchain/core": "^1.1.0",
+    "@langchain/deepseek": "^1.0.2",
+    "@langchain/langgraph": "^1.0.2",
     "@neuphonic/neuphonic-js": "^0.9.5",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
@@ -22,7 +25,8 @@
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "tailwind-merge": "^3.4.0",
-    "three": "^0.167.1"
+    "three": "^0.167.1",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",
