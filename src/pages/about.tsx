@@ -72,7 +72,7 @@ export default function AboutPage() {
   const sections: Section[] = [
     { title: "The Reality", component: <TheReality /> },
     { title: "The Challenges", component: <TheChallenges /> },
-    { title: "The Challenges", component: <TheNoise/> },
+    { title: "The Challenges", component: <TheNoise /> },
     { title: "The Question", component: <TheQuestion /> },
     { title: "The Idea", component: <TheIdeaPart1 /> },
     { title: "The Idea", component: <TheIdeaPart2 /> },
@@ -164,10 +164,11 @@ function TheNoise() {
 }
 
 function TheQuestion() {
+  return (
     <div className="flex flex-col gap-12 items-center px-4">
       <p>What the  do I do?</p>
     </div>
-
+  )
 }
 
 function TheIdeaPart1() {
