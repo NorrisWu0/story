@@ -2,6 +2,9 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { ShinyText } from "@/components/shiny-text";
 import { TextType } from "@/components/text-type";
+import { RotatingText } from "@/components/rotating-text";
+import FuzzyText from "@/components/FuzzyText";
+import { cn } from "@/lib/utils";
 
 type Dimension = {
   width: number;
@@ -68,8 +71,10 @@ export default function AboutPage() {
 
   const sections: Section[] = [
     { title: "The Reality", component: <TheReality /> },
-    { title: "The Problem", component: <TheProblem /> },
-    { title: "The Idea", component: <TheIdea /> },
+    { title: "The Challenges", component: <TheChallenges /> },
+    { title: "The Idea", component: <TheIdeaPart1 /> },
+    { title: "The Idea", component: <TheIdeaPart2 /> },
+    { title: "The Idea", component: <TheIdeaPart3 /> },
     { title: "The Experience", component: <TheExperience /> },
     { title: "The Outro", component: <TheOutro /> },
   ];
@@ -93,60 +98,98 @@ export default function AboutPage() {
   );
 }
 
+function Keyword({
+  children,
+  className,
+}: {
+  children: string;
+  className?: string;
+}) {
+  return (
+    <strong className={cn("text-indigo-500 text-5xl uppercase", className)}>
+      {children}
+    </strong>
+  );
+}
+
 function TheReality() {
   return (
-    <>
-      <p className="text-base text-muted-foreground mb-4">
-        In a world called <strong className="text-blue-500">sohac</strong>, an
-        imaginary realm experiencing a turbulent period of history.
+    <div className="flex flex-col gap-8">
+      <Keyword className="text-center">sohac</Keyword>
+      <p className="text-xl mb-4 text-center">
+        an oddly familiar imaginary realm
       </p>
-      <ul className="text-sm text-muted-foreground space-y-2">
-        <li>• Power shifts between global superpowers</li>
-        <li>• Emerging and disruptive technologies</li>
-        <li>• An increasingly faster-paced life</li>
-      </ul>
-    </>
-  );
-}
-function TheProblem() {
-  const problems = [
-    "Social anxiety and disconnection",
-    "Job insecurity in a rapidly changing economy",
-    "Increasing numbers feeling unsafe and uncertain",
-    "Large percentage unsure what their future holds",
-    "Many held back by the intensity of modern life",
-  ];
 
-  return (
-    <>
-      <p className="text-base text-muted-foreground mb-6">
-        People in this world face mounting challenges:
-      </p>
-      <ul className="text-sm text-muted-foreground space-y-3">
-        {problems.map((problem) => (
-          <li key={problem}>• {problem}</li>
-        ))}
+      <ul className="text-3xl space-y-8 text-center">
+        <li>Emerging Technological Revolution</li>
+        <li>Global Power Shift</li>
       </ul>
-    </>
+    </div>
   );
 }
-function TheIdea() {
+function TheChallenges() {
+  return (
+    <div className="flex flex-col gap-12 items-center px-4">
+      <p className="flex self-start items-end text-4xl">
+        Social<FuzzyText fontSize={40}>Instability</FuzzyText>
+      </p>
+
+      <div className="w-full ring-1"></div>
+
+      <p className="flex self-end items-end text-4xl">
+        <FuzzyText fontSize={40}>Disruptive</FuzzyText>Technology
+      </p>
+
+      <div className="w-full ring-1"></div>
+
+      <p className="flex self-start items-end text-4xl">
+        Financial <FuzzyText fontSize={40}>vulnerability</FuzzyText>
+      </p>
+    </div>
+  );
+}
+
+function TheIdeaPart1() {
   return (
     <>
       <div className="mb-6">
         <ShinyText text="STORY" speed={3} className="text-6xl text-blue-500" />
       </div>
-      <p className="text-base text-muted-foreground mb-4">
+      <p className="text-3xl mb-4">
         Leveraging the power of AI to help people gain a better understanding of
         themselves.
       </p>
-      <p className="text-sm text-muted-foreground">
-        <strong className="text-blue-500">STORY</strong> is NOT a teacher,
-        instructor, or supervisor.
-        <br />
-        It's a digital journal, a friend, a mentor—a reflection of yourself.
-      </p>
     </>
+  );
+}
+
+function TheIdeaPart2() {
+  return (
+    <div className="flex flex-col items-center gap-4 justify-center">
+      <span className="text-3xl">
+        <Keyword>STORY</Keyword> is NOT...
+      </span>
+      <RotatingText
+        className="text-8xl"
+        rotationInterval={3 * 1000}
+        texts={["A Manager", "A Overseer", "A Supervisor"]}
+      />
+    </div>
+  );
+}
+
+function TheIdeaPart3() {
+  return (
+    <div className="flex flex-col items-center gap-4 justify-center">
+      <span className="text-3xl">
+        <Keyword>STORY</Keyword> is...
+      </span>
+      <RotatingText
+        className="text-6xl text-center"
+        rotationInterval={3 * 1000}
+        texts={["A Friend", "A Mentor", "Yourself"]}
+      />
+    </div>
   );
 }
 
@@ -176,8 +219,8 @@ function TheExperience() {
 
 function TheOutro() {
   return (
-    <h1 className="text-6xl font-bold">
-      So. What's your <span className="text-blue-500">STORY</span>?
+    <h1 className="text-4xl font-bold text-center">
+      So... What's your <Keyword>STORY</Keyword>?
     </h1>
   );
 }
