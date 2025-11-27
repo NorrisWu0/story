@@ -2,7 +2,7 @@ import {
   WhoAmIGraph,
   ChatMessage,
   WhoAmIGraphInput,
-} from "@/whoami/graphs/whoami-graph";
+} from "@/module/whoami/graphs/whoami-graph";
 
 type ChatSession = {
   id: string;
