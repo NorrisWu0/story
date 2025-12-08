@@ -1,7 +1,7 @@
-import { generateSpeech } from "@/module/text-to-speech/lib/neuphonic";
+import { generateSpeech } from "@/module/text-to-speech/neuphonic";
 import { WhoAmIGraph } from "@/module/whoami/graphs/whoami-graph";
 import { narrativePrompt } from "./prompt";
-import { generateFilename } from "@/module/text-to-speech/lib/file";
+import { generateFilename } from "@/module/utils/file";
 import { writeFile } from "fs/promises";
 
 export type GenerateStoryConfig = {
