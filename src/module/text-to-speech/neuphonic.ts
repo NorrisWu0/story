@@ -9,7 +9,7 @@ const client = createClient({
 });
 
 export const sse = await client.tts.sse({
-  speed: 1.15,
+  speed: 1,
   lang_code: "en",
 });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEventHandler, useState } from "react";
+import { type FormEventHandler, useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { TextType } from "@/components/text-type";
 
@@ -14,15 +14,19 @@ type Response =
   | {
       state: "loaded";
       message: string;
+      audioBase64?: string | null;
     };
 
 export function ProfilerUI(props: {
-  onSubmit: (message: string) => Promise<string>;
+  onSubmit: (
+    message: string,
+  ) => Promise<{ text: string; audioBase64?: string | null }>;
 }) {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState<Response>({
     state: "idle",
   });
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -30,13 +34,25 @@ export function ProfilerUI(props: {
       state: "loading",
     });
 
-    const response = await props.onSubmit(message);
+    const data = await props.onSubmit(message);
 
     setResponse({
       state: "loaded",
-      message: response,
+      message: data.text,
+      audioBase64: data.audioBase64,
     });
   };
+
+  useEffect(() => {
+    if (
+      response.state === "loaded" &&
+      response.audioBase64 &&
+      audioRef.current
+    ) {
+      audioRef.current.src = `data:audio/wav;base64,${response.audioBase64}`;
+      audioRef.current.play();
+    }
+  }, [response]);
 
   return (
     <form className="flex-1 w-full flex flex-col mt-4" onSubmit={handleSubmit}>
@@ -57,6 +73,8 @@ export function ProfilerUI(props: {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
       />
+      {/* biome-ignore lint/a11y/useMediaCaption: TTS audio reads text already displayed on screen */}
+      <audio ref={audioRef} hidden />
     </form>
   );
 }

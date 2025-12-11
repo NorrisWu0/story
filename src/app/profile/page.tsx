@@ -1,5 +1,5 @@
-import { ProfilerUI } from "@/module/profiler/component/profiler-ui";
 import { headers } from "next/headers";
+import { ProfilerUI } from "@/module/profiler/component/profiler-ui";
 
 export default async function Page() {
   const headersList = await headers();
@@ -7,7 +7,9 @@ export default async function Page() {
   const protocal = headersList.get("x-forwarded-proto");
   const host = headersList.get("x-forwarded-host");
 
-  async function chat(message: string) {
+  async function chat(
+    message: string,
+  ): Promise<{ text: string; audioBase64: string | null }> {
     "use server";
 
     const apiUrl = `${protocal}://${host}/api/profiler`;

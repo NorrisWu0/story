@@ -1,4 +1,5 @@
 import { Profiler } from "@/module/profiler/profiler";
+import { generateSpeech } from "@/module/text-to-speech/neuphonic";
 
 const urls = [
   "https://pub-3609c6786e904bc2b95c6093682c92da.r2.dev/australia.md",
@@ -18,5 +19,18 @@ export async function POST(request: Request) {
 
   const response = await profiler.chat(message);
 
-  return Response.json(response);
+  // Generate audio
+  const speechResult = await generateSpeech(response);
+  const audioBase64 = speechResult.ok
+    ? Buffer.from(speechResult.wav).toString("base64")
+    : null;
+
+  console.debug({
+    text: response,
+  });
+
+  return Response.json({
+    text: response,
+    audioBase64,
+  });
 }
