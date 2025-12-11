@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { RotatingText } from "@/components/rotating-text";
-import { ShinyText } from "@/components/shiny-text";
 
 export default function Home() {
   const alias = [
@@ -11,7 +10,7 @@ export default function Home() {
     "Sloppy Drawer",
     "Day-Dreamer",
     "Cheapskate Tinker",
-    "Harmless Lunatics"
+    "Harmless Lunatics",
   ];
 
   return (

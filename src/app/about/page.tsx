@@ -1,75 +1,12 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
+import FuzzyText from "@/components/fuzzy-text";
+import { RotatingText } from "@/components/rotating-text";
 import { ShinyText } from "@/components/shiny-text";
 import { TextType } from "@/components/text-type";
-import { RotatingText } from "@/components/rotating-text";
-import FuzzyText from "@/components/FuzzyText";
 import { cn } from "@/lib/utils";
-
-type Dimension = {
-  width: number;
-  height: number;
-};
-
-type Section = {
-  title: string;
-  component: React.ReactNode;
-};
-
-type SectionContainerProps = {
-  dimension: Dimension;
-  children: React.ReactNode;
-  title: string;
-};
-
-function SectionContainer({
-  dimension,
-  children,
-  title,
-}: SectionContainerProps) {
-  return (
-    <div
-      className="snap-start snap-always flex items-center justify-center"
-      style={{ width: dimension.width, height: dimension.height }}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, ease: "linear" }}
-        viewport={{ once: true, amount: 0.5 }}
-        className="flex flex-col size-full relative py-4"
-      >
-        <div className="my-auto">{children}</div>
-
-        <span className="text-xl uppercase text-neutral-300 font-bold">
-          {title}
-        </span>
-      </motion.div>
-    </div>
-  );
-}
+import { Presentation, type Slide } from "./prensentation";
 
 export default function AboutPage() {
-  const containerRef = useRef<React.ComponentRef<"div">>(null);
-  const [sectionDimension, setSectionDimension] = useState<Dimension>({
-    width: 0,
-    height: 0,
-  });
-
-  useLayoutEffect(() => {
-    const contaienr = containerRef.current;
-    if (!contaienr) return;
-    const updateSectionDimension = () => {
-      setSectionDimension({
-        width: contaienr.offsetWidth,
-        height: contaienr.offsetHeight,
-      });
-    };
-
-    updateSectionDimension();
-  }, []);
-
-  const sections: Section[] = [
+  const sections: Slide[] = [
     { title: "The Reality", component: <TheReality /> },
     { title: "The Challenges", component: <TheChallenges /> },
     { title: "The Challenges", component: <TheNoise /> },
@@ -81,23 +18,7 @@ export default function AboutPage() {
     { title: "The Outro", component: <TheOutro /> },
   ];
 
-  return (
-    <div
-      id="scrolling-container"
-      ref={containerRef}
-      className="flex-1 size-full overflow-y-auto snap-y snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-    >
-      {sections.map((section) => (
-        <SectionContainer
-          key={section.title}
-          dimension={sectionDimension}
-          title={section.title}
-        >
-          {section.component}
-        </SectionContainer>
-      ))}
-    </div>
-  );
+  return <Presentation slides={sections} />;
 }
 
 function Keyword({
@@ -157,8 +78,8 @@ function TheChallenges() {
 function TheNoise() {
   return (
     <div className="flex flex-col gap-12 items-center px-4">
-        <FuzzyText fontSize={40}>Constant</FuzzyText>
-        <FuzzyText fontSize={40}>Noise</FuzzyText> 
+      <FuzzyText fontSize={40}>Constant</FuzzyText>
+      <FuzzyText fontSize={40}>Noise</FuzzyText>
     </div>
   );
 }
@@ -166,9 +87,9 @@ function TheNoise() {
 function TheQuestion() {
   return (
     <div className="flex flex-col gap-12 items-center px-4">
-      <p>What the  do I do?</p>
+      <p>What the do I do?</p>
     </div>
-  )
+  );
 }
 
 function TheIdeaPart1() {
@@ -178,7 +99,8 @@ function TheIdeaPart1() {
         <ShinyText text="STORY" speed={3} className="text-6xl text-blue-500" />
       </div>
       <p className="text-3xl mb-4">
-        Your digital companion that wants to know you and in return, helps you knows yourself.
+        Your digital companion that wants to know you and in return, helps you
+        knows yourself.
       </p>
     </>
   );
@@ -222,26 +144,28 @@ function TheExperience() {
   ];
 
   return (
-      <div className="text-3xl">
-        <TextType
-          text={useCases}
-          startOnVisible={true}
-          loop={true}
-          pauseDuration={5000}
-          deletingSpeed={30}
-          typingSpeed={50}
-        />
-      </div>
+    <div className="text-3xl">
+      <TextType
+        text={useCases}
+        startOnVisible={true}
+        loop={true}
+        pauseDuration={5000}
+        deletingSpeed={10}
+        typingSpeed={30}
+      />
+    </div>
   );
 }
 
 function TheOutro() {
   return (
-    <div >
+    <div>
       <h1 className="text-4xl font-bold text-center">
         So... What's your <Keyword>STORY</Keyword>?
       </h1>
-      <p className="italic text-base text-muted-foreground">psss, there might be technical demo...</p>
+      <p className="italic text-base text-muted-foreground">
+        psss, there might be technical demo...
+      </p>
     </div>
   );
 }
